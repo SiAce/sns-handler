@@ -4,7 +4,7 @@ import { SnsHandlerBase } from "./sns-handler-base";
 import { SnsInfo } from "./sns-info";
 
 export class SnsFinishHandler extends SnsHandlerBase {
-    override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
+    protected override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
         const key: Key = {
             deviceId: snsInfo.deviceId,
         }
@@ -17,5 +17,4 @@ export class SnsFinishHandler extends SnsHandlerBase {
 
         return flatEntry;
     }
-
 }

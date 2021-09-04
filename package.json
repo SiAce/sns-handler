@@ -1,5 +1,5 @@
 {
-  "name": "TypeScript",
+  "name": "sns-event-handler",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,9 +11,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.20",
+    "@types/vast-client": "^3.0.1",
+    "@types/xmldom": "^0.1.31",
     "typescript": "^4.4.2"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "vast-client": "^3.1.1"
   }
 }

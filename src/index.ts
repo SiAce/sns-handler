@@ -1,19 +1,22 @@
+import { VASTParser } from 'vast-client';
+import { DOMParser } from "xmldom";
 import { Database } from "./sns/dependency/database/database";
 import { Dependency } from "./sns/dependency/dependency";
 import { UrlSender } from "./sns/dependency/tracking-url/url-sender";
-import { VastParser } from "./sns/dependency/vast/vast-parser";
+import { SnsVastParser } from "./sns/dependency/vast/sns-vast-parser";
 import { SnsEvent } from "./sns/sns-event";
 import { SnsEventSubject } from "./sns/sns-event-subject";
 import { SnsHandler } from "./sns/sns-handler";
 import { SnsHandlerFactory } from "./sns/sns-handler-factory";
 
+
 const database = new Database(process.env.tablename!);
-const vastParser = new VastParser();
+const snsVastParser = new SnsVastParser(new DOMParser(), new VASTParser());
 const urlSender = new UrlSender();
 
 const dependency: Dependency = {
     database,
-    vastParser,
+    snsVastParser: snsVastParser,
     urlSender
 }
 
@@ -34,7 +37,7 @@ const snsEvent: SnsEvent = {
         "message": "asdfasdf"
     }`,
     time: 777,
-    subject: SnsEventSubject.Started
+    subject: SnsEventSubject.Started as string
 };
 
 handler(snsEvent);

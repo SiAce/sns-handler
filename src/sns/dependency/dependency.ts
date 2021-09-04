@@ -1,10 +1,10 @@
 import { Database } from "./database/database";
 import { UrlSender } from "./tracking-url/url-sender";
-import { VastParser } from "./vast/vast-parser";
+import { SnsVastParser } from "./vast/sns-vast-parser";
 
 
 export interface Dependency {
     database: Database;
-    vastParser: VastParser;
+    snsVastParser: SnsVastParser;
     urlSender: UrlSender;
 }

@@ -4,10 +4,10 @@ import { SnsHandlerBase } from "./sns-handler-base";
 import { SnsInfo } from "./sns-info";
 
 export class SnsStartHandler extends SnsHandlerBase {
-    override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
+    protected override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
         const axiosResponse = await axios.get<string>(snsInfo.adVastUrl);
         const vastString = axiosResponse.data;
-        const adId = this.dependency.vastParser.parseId(vastString);
+        const adId = +await this.dependency.snsVastParser.parseId(vastString);
         const startTime = snsInfo.time;
         const ttl = startTime + 600;
 
@@ -20,5 +20,4 @@ export class SnsStartHandler extends SnsHandlerBase {
             ttl
         };
     }
-
 }
