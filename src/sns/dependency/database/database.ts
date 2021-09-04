@@ -18,6 +18,9 @@ export class Database {
     };
 
     public async put(entry: Entry): Promise<void> {
-
+        console.log(
+            `Entry saved:
+            ${JSON.stringify(entry, null, 2)}`
+        );
     };
 }

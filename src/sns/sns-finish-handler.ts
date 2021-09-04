@@ -1,19 +1,19 @@
-import { SnsEventHandler } from "./sns-event-handler";
-import { SnsEvent } from "./sns-event";
-import { FlatEntry, Key } from "src/dependency/database/model";
-import { Transformer } from "src/dependency/database/transformer";
+import { FlatEntry, Key } from "./dependency/database/model";
+import { Transformer } from "./dependency/database/transformer";
+import { SnsHandlerBase } from "./sns-handler-base";
+import { SnsInfo } from "./sns-info";
 
-export class SnsFinishHandler extends SnsEventHandler {
-    override async getFlatEntry(): Promise<FlatEntry> {
+export class SnsFinishHandler extends SnsHandlerBase {
+    override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
         const key: Key = {
-            deviceId: this.snsInfo.deviceId,
+            deviceId: snsInfo.deviceId,
         }
         const entry = await this.dependency.database.get(key);
 
         const flatEntry = Transformer.actualToFlat(entry);
 
-        flatEntry.endTime = this.snsInfo.time;
-        flatEntry.ttl = this.snsInfo.time + 600;
+        flatEntry.endTime = snsInfo.time;
+        flatEntry.ttl = snsInfo.time + 600;
 
         return flatEntry;
     }

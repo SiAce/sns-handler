@@ -29,21 +29,3 @@ export class Transformer {
         }
     }
 }
-
-/*
-export interface Entry {
-    deviceId: string,
-    ads: Ads,
-    ttl: number
-}
-
-export interface FlatEntry {
-    deviceId: string,
-    adId: number,
-    vastString: string,
-    startTime?: number,
-    endTime?: number,
-    ttl: number,
-}
-
- */

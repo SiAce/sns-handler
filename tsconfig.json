@@ -5,8 +5,14 @@
     ],
     "module": "commonjs",
     "target": "es2021",
+    "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@sns*": [
+        "src/sns*"
+      ]
+    },
     "sourceMap": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -14,12 +20,15 @@
     "noImplicitReturns": true,
     "strict": true,
     "strictBindCallApply": true,
-    "strictFunctionTypes":true,
+    "strictFunctionTypes": true,
     "strictNullChecks": true,
-    "strictPropertyInitialization":true,
+    "strictPropertyInitialization": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ]
 }

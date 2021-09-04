@@ -1,8 +1,7 @@
-import { SnsEvent } from "src/sns/sns-event";
 
 export class VastParser {
     public parseUrls(vastString: string) {
-        return ["adbbbbbbbbbb"]
+        return ["https://raw.githubusercontent.com/InteractiveAdvertisingBureau/VAST_Samples/master/VAST%204.2%20Samples/Ad_Verification-test.xml"]
     }
 
     public parseId(vastString: string) {
