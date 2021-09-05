@@ -11,6 +11,11 @@ export class Database {
                     adBlob: "",
                     startTime: 1,
                     endTime: 2,
+                },
+                2: {
+                    adBlob: "what?",
+                    startTime: 233,
+                    endTime: 244,
                 }
             },
             ttl: 123,

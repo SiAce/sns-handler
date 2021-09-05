@@ -8,20 +8,11 @@ export interface Entry {
     ttl: number
 }
 
-export interface FlatEntry {
-    deviceId: string,
-    adId: number,
-    vastString: string,
-    startTime?: number,
-    endTime?: number,
-    ttl: number,
+export interface Ads {
+    [adId: string]: AdEntry
 }
 
-interface Ads {
-    [adId: number]: AdEntry
-}
-
-interface AdEntry {
+export interface AdEntry {
     adBlob: string,
     startTime?: number,
     endTime?: number,

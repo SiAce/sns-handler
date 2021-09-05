@@ -1,23 +1,26 @@
+import { SnsInfo } from "@sns/sns-model";
 import axios from "axios";
-import { FlatEntry } from "./dependency/database/model";
+import { Ads, Entry } from "./dependency/database/model";
 import { SnsHandlerBase } from "./sns-handler-base";
-import { SnsInfo } from "./sns-info";
 
 export class SnsStartHandler extends SnsHandlerBase {
-    protected override async getFlatEntry(snsInfo: SnsInfo): Promise<FlatEntry> {
+    protected override async getEntry(snsInfo: SnsInfo): Promise<Entry> {
         const axiosResponse = await axios.get<string>(snsInfo.adVastUrl);
         const vastString = axiosResponse.data;
-        const adId = +await this.dependency.snsVastParser.parseId(vastString);
-        const startTime = snsInfo.time;
-        const ttl = startTime + 600;
+        const adIds = await this.dependency.snsVastParser.parseId(vastString);
+        const ads: Ads = adIds.reduce((accumulator: Ads, currentValue) => {
+            accumulator[currentValue] = {
+                adBlob: vastString,
+                startTime: snsInfo.time,
+                endTime: undefined,
+            };
+            return accumulator;
+        }, {});
 
         return {
             deviceId: snsInfo.deviceId,
-            adId,
-            vastString,
-            startTime,
-            endTime: undefined,
-            ttl
+            ads,
+            ttl: snsInfo.time + 600
         };
     }
 }

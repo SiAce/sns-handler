@@ -1,10 +1,9 @@
 {
   "name": "sns-event-handler",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +17,14 @@
   "dependencies": {
     "axios": "^0.21.1",
     "vast-client": "^3.1.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiAce/sns-handler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SiAce/sns-handler/issues"
+  },
+  "homepage": "https://github.com/SiAce/sns-handler#readme",
+  "description": ""
 }

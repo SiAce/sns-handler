@@ -1,8 +1,7 @@
 import { Dependency } from "./dependency/dependency";
-import { SnsEvent } from "./sns-event";
-import { SnsEventSubject } from "./sns-event-subject";
 import { SnsFinishHandler } from "./sns-finish-handler";
 import { SnsHandler } from "./sns-handler";
+import { SnsEvent, SnsEventSubject } from "./sns-model";
 import { SnsStartHandler } from "./sns-start-handler";
 
 export class SnsHandlerFactory {

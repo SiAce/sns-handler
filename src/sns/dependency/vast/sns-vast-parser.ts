@@ -14,10 +14,9 @@ export class SnsVastParser {
         return trackingUrls;
     }
 
-    public async parseId(vastString: string) {
+    public async parseId(vastString: string): Promise<string[]> {
         const vastXml = this.domParser.parseFromString(vastString, "text/xml");
         const vastResponse = await this.vastParser.parseVAST(vastXml);
-        const adId = vastResponse.ads[0].id!;
-        return adId;
+        return vastResponse.ads.map((ad) => ad.id!);
     }
 }

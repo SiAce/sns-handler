@@ -4,10 +4,9 @@ import { Database } from "./sns/dependency/database/database";
 import { Dependency } from "./sns/dependency/dependency";
 import { UrlSender } from "./sns/dependency/tracking-url/url-sender";
 import { SnsVastParser } from "./sns/dependency/vast/sns-vast-parser";
-import { SnsEvent } from "./sns/sns-event";
-import { SnsEventSubject } from "./sns/sns-event-subject";
 import { SnsHandler } from "./sns/sns-handler";
 import { SnsHandlerFactory } from "./sns/sns-handler-factory";
+import { SnsEvent, SnsEventSubject } from "./sns/sns-model";
 
 
 const database = new Database(process.env.tablename!);
@@ -37,7 +36,7 @@ const snsEvent: SnsEvent = {
         "message": "asdfasdf"
     }`,
     time: 777,
-    subject: SnsEventSubject.Started as string
+    subject: SnsEventSubject.Started
 };
 
 handler(snsEvent);
