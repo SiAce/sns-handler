@@ -1,5 +1,5 @@
-import { SnsEvent } from "@sns/sns-model";
+import { SnsEvent } from "@sns/model";
 
 export interface SnsHandler {
-    handle(snsEvent: SnsEvent): Promise<void>;
+    handle(snsEvent: SnsEvent): Promise<any>;
 }

@@ -1,13 +1,13 @@
-import { Dependency } from "./dependency/dependency";
+import { SnsDependency } from "./dependency/dependency";
 import { SnsFinishHandler } from "./sns-finish-handler";
 import { SnsHandler } from "./sns-handler";
-import { SnsEvent, SnsEventSubject } from "./sns-model";
+import { SnsEvent, SnsEventSubject } from "./model";
 import { SnsStartHandler } from "./sns-start-handler";
 
 export class SnsHandlerFactory {
     private strategyMap: Map<SnsEventSubject, SnsHandler>;
 
-    constructor(dependency: Dependency) {
+    constructor(dependency: SnsDependency) {
         this.strategyMap = new Map<SnsEventSubject, SnsHandler>([
             [SnsEventSubject.Started, new SnsStartHandler(dependency)],
             [SnsEventSubject.Finished, new SnsFinishHandler(dependency)],

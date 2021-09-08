@@ -1,4 +1,4 @@
-import { SnsInfo } from "@sns/sns-model";
+import { SnsInfo } from "@sns/model";
 import axios from "axios";
 import { Ads, Entry } from "./dependency/database/model";
 import { SnsHandlerBase } from "./sns-handler-base";

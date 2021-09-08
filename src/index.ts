@@ -1,19 +1,19 @@
 import { VASTParser } from 'vast-client';
 import { DOMParser } from "xmldom";
 import { Database } from "./sns/dependency/database/database";
-import { Dependency } from "./sns/dependency/dependency";
+import { SnsDependency } from "./sns/dependency/dependency";
 import { UrlSender } from "./sns/dependency/tracking-url/url-sender";
-import { SnsVastParser } from "./sns/dependency/vast/sns-vast-parser";
+import { SnsVastParser } from "./sns/dependency/vast/vast-parser";
 import { SnsHandler } from "./sns/sns-handler";
 import { SnsHandlerFactory } from "./sns/sns-handler-factory";
-import { SnsEvent, SnsEventSubject } from "./sns/sns-model";
+import { SnsEvent, SnsEventSubject } from "./sns/model";
 
 
 const database = new Database(process.env.tablename!);
 const snsVastParser = new SnsVastParser(new DOMParser(), new VASTParser());
 const urlSender = new UrlSender();
 
-const dependency: Dependency = {
+const dependency: SnsDependency = {
     database,
     snsVastParser: snsVastParser,
     urlSender

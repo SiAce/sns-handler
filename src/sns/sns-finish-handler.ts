@@ -1,6 +1,6 @@
 import { Entry, Key } from "./dependency/database/model";
 import { SnsHandlerBase } from "./sns-handler-base";
-import { SnsInfo } from "@sns/sns-model";
+import { SnsInfo } from "@sns/model";
 
 export class SnsFinishHandler extends SnsHandlerBase {
     protected override async getEntry(snsInfo: SnsInfo): Promise<Entry> {

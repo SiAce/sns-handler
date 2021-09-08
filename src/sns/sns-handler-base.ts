@@ -1,41 +1,34 @@
 import { Entry } from "./dependency/database/model";
-import { Dependency } from "./dependency/dependency";
-import { TrackingUrlType } from "./dependency/tracking-url/type";
+import { SnsDependency } from "./dependency/dependency";
+import { TrackingUrlType } from "./dependency/tracking-url/model";
 import { SnsHandler } from "./sns-handler";
-import { SnsEvent, SnsEventSubject, SnsInfo } from "@sns/sns-model";
+import { SnsEvent, SnsEventSubject, SnsInfo } from "@sns/model";
 
 export abstract class SnsHandlerBase implements SnsHandler {
-    constructor(protected dependency: Dependency) { }
+    constructor(protected dependency: SnsDependency) { }
 
     public async handle(snsEvent: SnsEvent) {
         const snsInfo: SnsInfo = SnsHandlerBase.eventToInfo(snsEvent);
         const entry = await this.getEntry(snsInfo);
-        const trackingUrls = await this.parseTrackingUrls(entry, snsInfo);
-        await Promise.all([this.writeToDb(entry), this.fireUrls(trackingUrls)]);
+        await Promise.allSettled([this.writeToDb(entry), this.parseAndFireUrls(entry, snsInfo)]);
     }
 
     protected abstract getEntry(snsInfo: SnsInfo): Promise<Entry>;
 
-    private async parseTrackingUrls(entry: Entry, snsInfo: SnsInfo): Promise<string[]> {
+    private async parseAndFireUrls(entry: Entry, snsInfo: SnsInfo) {
         const nestedUrls = await Promise.all(Object.values(entry.ads).map((adEntry) =>
             this.dependency.snsVastParser.parseUrls(adEntry.adBlob, TrackingUrlType[snsInfo.subject])
         ));
 
-        return nestedUrls.flat();
+        const flatUrls = nestedUrls.flat();
+
+        await this.dependency.urlSender.fireTrackingUrls(flatUrls);
     }
 
     private writeToDb(entry: Entry): Promise<void> {
         return this.dependency.database.put(entry);
     }
 
-    private async fireUrls(urls: string[]) {
-        try {
-            return await this.dependency.urlSender.fireTrackingUrls(urls);
-        } catch (error) {
-            throw new Error("Cannot fire tracking urls");
-        }
-
-    }
 
     private static eventToInfo(snsEvent: SnsEvent): SnsInfo {
         return {
