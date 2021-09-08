@@ -8,16 +8,17 @@ export class SnsHandlerFactory {
     private strategyMap: Map<SnsEventSubject, SnsHandler>;
 
     constructor(dependency: Dependency) {
-        const snsStartHandler: SnsStartHandler = new SnsStartHandler(dependency);
-        const snsFinishHandler: SnsFinishHandler = new SnsFinishHandler(dependency);
-
         this.strategyMap = new Map<SnsEventSubject, SnsHandler>([
-            [SnsEventSubject.Started, snsStartHandler],
-            [SnsEventSubject.Finished, snsFinishHandler],
+            [SnsEventSubject.Started, new SnsStartHandler(dependency)],
+            [SnsEventSubject.Finished, new SnsFinishHandler(dependency)],
         ]);
     }
 
-    public create(snsEvent: SnsEvent): SnsHandler | undefined {
-        return this.strategyMap.get(snsEvent.subject as SnsEventSubject);
+    public create(snsEvent: SnsEvent): SnsHandler {
+        const snsHandler = this.strategyMap.get(snsEvent.subject as SnsEventSubject);
+        if (snsHandler === undefined) {
+            throw new Error("SNS subject not supported!");
+        }
+        return snsHandler;
     }
 }

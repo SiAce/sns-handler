@@ -1,5 +1,5 @@
 /.idea/
-/sns-handler.iml
+/*.iml
 /.vscode/
 /dist/
 /node_modules/

@@ -8,7 +8,7 @@ export abstract class SnsHandlerBase implements SnsHandler {
     constructor(protected dependency: Dependency) { }
 
     public async handle(snsEvent: SnsEvent) {
-        const snsInfo: SnsInfo = this.eventToInfo(snsEvent);
+        const snsInfo: SnsInfo = SnsHandlerBase.eventToInfo(snsEvent);
         const entry = await this.getEntry(snsInfo);
         const trackingUrls = await this.parseTrackingUrls(entry, snsInfo);
         await Promise.all([this.writeToDb(entry), this.fireUrls(trackingUrls)]);
@@ -37,7 +37,7 @@ export abstract class SnsHandlerBase implements SnsHandler {
 
     }
 
-    private eventToInfo(snsEvent: SnsEvent): SnsInfo {
+    private static eventToInfo(snsEvent: SnsEvent): SnsInfo {
         return {
             subject: snsEvent.subject as SnsEventSubject,
             deviceId: snsEvent.id,

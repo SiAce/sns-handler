@@ -22,10 +22,7 @@ const dependency: Dependency = {
 const snsHandlerFactory: SnsHandlerFactory = new SnsHandlerFactory(dependency);
 
 export const handler = async (snsEvent: SnsEvent) => {
-    const snsHandler: SnsHandler | undefined = snsHandlerFactory.create(snsEvent);
-    if (snsHandler === undefined) {
-        throw new Error("Subject not supported");
-    }
+    const snsHandler: SnsHandler = snsHandlerFactory.create(snsEvent);
     return await snsHandler.handle(snsEvent);
 }
 
@@ -39,4 +36,7 @@ const snsEvent: SnsEvent = {
     subject: SnsEventSubject.Started
 };
 
-handler(snsEvent);
+handler(snsEvent).then(r => {
+    console.log("SNS event handled, the response is:");
+    console.log(r);
+});
