@@ -7,8 +7,7 @@ import { SnsEvent, SnsEventSubject, SnsInfo } from "@sns/model";
 export abstract class SnsHandlerBase implements SnsHandler {
     constructor(protected dependency: SnsDependency) { }
 
-    public async handle(snsEvent: SnsEvent) {
-        const snsInfo: SnsInfo = SnsHandlerBase.eventToInfo(snsEvent);
+    public async handle(snsInfo: SnsInfo) {
         const entry = await this.getEntry(snsInfo);
         await Promise.allSettled([this.writeToDb(entry), this.parseAndFireUrls(entry, snsInfo)]);
     }
@@ -27,16 +26,6 @@ export abstract class SnsHandlerBase implements SnsHandler {
 
     private writeToDb(entry: Entry): Promise<void> {
         return this.dependency.database.put(entry);
-    }
-
-
-    private static eventToInfo(snsEvent: SnsEvent): SnsInfo {
-        return {
-            subject: snsEvent.subject as SnsEventSubject,
-            deviceId: snsEvent.id,
-            adVastUrl: JSON.parse(snsEvent.message).url,
-            time: snsEvent.time,
-        }
     }
 }
 

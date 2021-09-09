@@ -4,9 +4,9 @@ import { Database } from "./sns/dependency/database/database";
 import { SnsDependency } from "./sns/dependency/dependency";
 import { UrlSender } from "./sns/dependency/tracking-url/url-sender";
 import { SnsVastParser } from "./sns/dependency/vast/vast-parser";
-import { SnsHandler } from "./sns/sns-handler";
 import { SnsHandlerFactory } from "./sns/sns-handler-factory";
 import { SnsEvent, SnsEventSubject } from "./sns/model";
+import { DelegateHandler } from "./delegate-handler";
 
 
 const database = new Database(process.env.tablename!);
@@ -21,9 +21,10 @@ const dependency: SnsDependency = {
 
 const snsHandlerFactory: SnsHandlerFactory = new SnsHandlerFactory(dependency);
 
+const delegateHandler: DelegateHandler = new DelegateHandler(snsHandlerFactory);
+
 export const handler = async (snsEvent: SnsEvent) => {
-    const snsHandler: SnsHandler = snsHandlerFactory.create(snsEvent);
-    return await snsHandler.handle(snsEvent);
+    return await delegateHandler.handle(snsEvent);
 }
 
 const snsEvent: SnsEvent = {
