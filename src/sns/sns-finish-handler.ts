@@ -1,6 +1,6 @@
+import { SnsInfo } from "./model";
 import { Entry, Key } from "./dependency/database/model";
 import { SnsHandlerBase } from "./sns-handler-base";
-import { SnsInfo } from "@sns/model";
 
 export class SnsFinishHandler extends SnsHandlerBase {
     protected override async getEntry(snsInfo: SnsInfo): Promise<Entry> {
@@ -9,6 +9,10 @@ export class SnsFinishHandler extends SnsHandlerBase {
         }
         const oldEntry = await this.dependency.database.get(key);
 
+        return this.updateTime(oldEntry, snsInfo);
+    }
+
+    private updateTime(oldEntry: Entry, snsInfo: SnsInfo): Entry {
         for (const adId in oldEntry.ads) {
             oldEntry.ads[adId].endTime = snsInfo.time;
         }

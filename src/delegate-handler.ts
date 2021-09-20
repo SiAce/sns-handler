@@ -1,6 +1,6 @@
-import { SnsEvent, SnsEventSubject, SnsInfo } from "@sns/model";
-import { SnsHandler } from "@sns/sns-handler";
-import { SnsHandlerFactory } from "@sns/sns-handler-factory";
+import { SnsEvent, SnsEventSubject, SnsInfo } from "./sns/model";
+import { SnsHandler } from "./sns/sns-handler";
+import { SnsHandlerFactory } from "./sns/sns-handler-factory";
 
 export class DelegateHandler {
     constructor(private snsHandlerFactory: SnsHandlerFactory) {};
